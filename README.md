@@ -142,7 +142,7 @@ This will create the following output files:
 To answer the bonus questions:
 
 ```bash
-poetry run python src/graph/ad_hoc.py
+poetry run python ad_hoc.py
 ```
 
 This will print:
