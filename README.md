@@ -100,11 +100,6 @@ For a given drug, find other drugs **mentioned in the same journals**,
 ## Testing
 
 - Simple unit tests for data loading, cleaning, and transformation.
-- Run tests using:
-
-```bash
-pytest tests/
-```
 
 ---
 ## Project Setup
@@ -122,28 +117,47 @@ Make sure you have:
 Clone the project and install dependencies:
 
 ```bash
-git clone 
+git clone ....
 ```
 
-### Run the pipeline
+## Run the pipeline
 
-You can run the main pipeline with:
+To run the full data pipeline and generate the outputs:
 
 ```bash
-poetry run python main.py
+poetry install            # install all dependencies
+poetry run python main.py # run the main pipeline
 ```
 
-### Run tests
+This will create the following output files:
 
-You can run the unit test with:
+- `output/cleaned_data/*.csv` (cleaned source data)
+- `output/drug_journal.csv` (flat table)
+- `output/drug_journal.json` (grouped JSON)
+
+---
+
+### Run ad-hoc analysis (bonus)
+
+To answer the bonus questions:
 
 ```bash
-pytest tests/
+poetry run python src/graph/ad_hoc.py
 ```
 
-The output files will be saved in the `output/` folder:
-- `drug_journal.csv`
-- `drug_journal.json`
+This will print:
+- The journal that mentions the most different drugs
+- Related drugs to a given drug from PubMed journals
+
+---
+
+### Run the tests
+
+To run the unit tests:
+
+```bash
+poetry run pytest
+```
 
 ---
 
