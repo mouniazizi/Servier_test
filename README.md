@@ -120,6 +120,13 @@ Alternatively, you can install it using pip:
 ```bash
 pip install poetry
 ```
+
+To install test tools like `pytest`, run:
+
+```bash
+poetry add --group dev pytest
+```
+
 ### Install the project
 
 Clone the project and install dependencies:

@@ -66,9 +66,9 @@ if __name__=='__main__':
         data = json.load(f)
 
     # 1. Find journal with most unique drugs
-    top_journal,top_count = journal_with_most_unique_drugs(data)
-    print("Journal avec le plus de médicaments différents :", top_journal, top_count )
+    top_journal, top_count = journal_with_most_unique_drugs(data)
+    print("Journal with the most unique drugs mentioned:", top_journal, top_count)
 
     # 2. Find related drugs to a specific one (PubMed only)
     related = get_related_drugs_from_pubmed(data, "tetracycline")
-    print("Médicaments liés à 'tetracycline' via les mêmes journaux PubMed :", related)
+    print("Drugs related to 'tetracycline' via shared PubMed journals:", related)

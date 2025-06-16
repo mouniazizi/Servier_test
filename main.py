@@ -5,7 +5,7 @@ from src.transform.generate_graph import build_drug_journal_graph
 
 
 def main():
-    print("Extraction des données...")
+    print("Extracting data...")
     repo = DataRepository()
     raw_data = {
         "drugs": repo.get_drugs(),
@@ -13,19 +13,23 @@ def main():
         "clinical_trials": repo.get_clinical_trials()
     }
 
-    print("Nettoyage des données...")
+    print("Cleaning data...")
     cleaned_data = clean_and_prepare_data(raw_data)
 
+    print("Preview of cleaned data:")
+    for source, df in cleaned_data.items():
+        print(source.upper(), df.head())
+        load_dataframe(df, source, 'csv', output_dir='output/cleaned_data')
 
-    print("Aperçu des données nettoyées :")
-    for domain, df in cleaned_data.items():
-        print(domain.upper(),df.head())
-        load_dataframe(df,domain,'csv',output_dir='output/cleaned_data')
+    # Build the drug-journal relationships
+    graph_dict, graph_df = build_drug_journal_graph(
+        cleaned_data['drugs'], cleaned_data['pubmed'], cleaned_data['clinical_trials']
+    )
 
-    graph_dict,graph_df = build_drug_journal_graph(cleaned_data['drugs'], cleaned_data['pubmed'], cleaned_data['clinical_trials'])
-    load_dataframe(graph_df,'drug_journal','csv','output/graph')
+    # Save outputs
+    load_dataframe(graph_df, 'drug_journal', 'csv', 'output/graph')
+    load_dataframe(graph_dict, 'drug_journal', 'json', 'output/graph')
 
-    load_dataframe(graph_dict,'drug_journal','json','output/graph')
 
 if __name__ == "__main__":
     main()

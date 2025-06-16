@@ -19,11 +19,11 @@ def extract_json(file_path: str) -> pd.DataFrame:
 
 def clean_json_text(raw):
     """
-    Removes trailing commas and unwanted characters to make the JSON valid.
+    Removes trailing commas to make the JSON valid.
     """
     cleaned = raw.strip()
 
-    # Supprimer la virgule finale
+    # Remove trailing commas
     cleaned = cleaned.replace(',\n]', '\n]')
     cleaned = cleaned.replace(',\n}', '\n}')
     cleaned = cleaned.rstrip(',]') + ']'
@@ -39,18 +39,18 @@ def extract_json_with_fix(file_path):
         with open(file_path, 'r', encoding='utf-8') as f:
             return pd.DataFrame(json.load(f))
     except json.JSONDecodeError as e:
-        print(f"[Erreur JSON] {file_path} – {e}")
+        print(f"[JSON error] {file_path} – {e}")
         
-        # Deuxième tentative avec correction simple
+        # Second attempt with a fix
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 raw = f.read()
             fixed = clean_json_text(raw)
             data = json.loads(fixed)
-            print(f"[Correction réussie] {file_path}")
+            print(f"[Fix successful] {file_path}")
             return pd.DataFrame(data)
         except Exception as e2:
-            print(f"[Correction échouée] {file_path} – {e2}")
+            print(f"[Fix failed] {file_path} – {e2}")
             return None
 
 def extract_csv_or_json(file_path):
@@ -66,8 +66,8 @@ def extract_csv_or_json(file_path):
 
 def extract_all_data(base_path="data"):
     """
-    Read all files inside each folder of the base path (e.g. pubmed, clinical_trials, drugs).
-    Group and return the data by folder name (as a dictionary of lists of DataFrames).
+    Read all CSV or JSON files in each subfolder of the base path (e.g. pubmed, clinical_trials, drugs).
+    Return a dictionary of lists of DataFrames, grouped by subfolder name.
     """
     base = Path(base_path)
     file_type_data = {}
