@@ -109,23 +109,34 @@ For a given drug, find other drugs **mentioned in the same journals**,
 Make sure you have:
 
 - Python 3.9 or newer installed
-- Poetry installed
+- Poetry installed 
 - Git (for cloning the project)
 
+To install Poetry, you can use the official method:
+```bash
+curl -sSL https://install.python-poetry.org | python3 -
+```
+Alternatively, you can install it using pip:
+```bash
+pip install poetry
+```
 ### Install the project
 
 Clone the project and install dependencies:
 
 ```bash
-git clone ....
+git clone git@github.com:mouniazizi/Servier_test.git
+poetry install  # install all dependencies
+poetry shell
 ```
+
+
 
 ## Run the pipeline
 
 To run the full data pipeline and generate the outputs:
 
 ```bash
-poetry install            # install all dependencies
 poetry run python main.py # run the main pipeline
 ```
 
@@ -142,7 +153,7 @@ This will create the following output files:
 To answer the bonus questions:
 
 ```bash
-poetry run python src/graph/ad_hoc.py
+poetry run python ad_hoc.py
 ```
 
 This will print:
